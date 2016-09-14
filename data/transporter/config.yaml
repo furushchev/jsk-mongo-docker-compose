@@ -1,0 +1,8 @@
+nodes:
+  mongo:
+    type: mongo
+    uri: mongodb://mongo1/jsk_robot_lifelog
+    debug: true
+  elastic:
+    type: elasticsearch
+    uri: http://elasticsearch:9200/

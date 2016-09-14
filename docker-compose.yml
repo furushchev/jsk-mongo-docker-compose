@@ -1,0 +1,59 @@
+mongo1:
+  image: mongo:3.2
+  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--dbpath", "/db", "--configsvr", "--journal", "--noprealloc", "--smallfiles", "--rest"]
+  hostname: mongo1
+  ports:
+    - 27017:27017
+    - 28017:28017
+  restart: always
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./data/mongo1:/db
+mongo2:
+  image: mongo:3.2
+  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--dbpath", "/db", "--configsvr", "--journal", "--noprealloc", "--smallfiles", "--rest"]
+  hostname: mongo2
+  ports:
+    - 27018:27017
+    - 28018:28017
+  restart: always
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./data/mongo2:/db
+  links:
+    - mongo1:mongo1
+    - mongo2:mongo2
+elasticsearch:
+  hostname: elasticsearch
+  image: stabenfeldt/elasticsearch-marvel
+  ports:
+    - 9200:9200
+    - 9300:9300
+  links:
+    - mongo1:mongo1
+    - mongo2:mongo2
+  volumes:
+    - ./data/elasticsearch/logging.yml:/etc/elasticsearch/logging.yml
+  restart: always
+mongosetup:
+  image: mongo:3.2
+  entrypoint: ["/scripts/mongosetup.sh"]
+  hostname: mongosetup
+  volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./scripts:/scripts
+  links:
+    - mongo1:mongo1
+    - mongo2:mongo2
+transporter: # mongodb -> elasticsearch
+  hostname: transporter
+  image: golang:1.5
+  links:
+    - mongo1:mongo1
+    - mongo2:mongo2
+    - elasticsearch:elasticsearch
+  volumes:
+    - ./data/transporter:/transporter
+    - ./scripts:/scripts
+  restart: always
+  entrypoint: [ "/scripts/transportersetup.sh" ]
