@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MONGO=$(getent hosts mongo1 | awk '{ print $1 }')
-ES=$(getent hosts elasticsearch | awk '{print $1}')
+#MONGO=$(getent hosts mongo1 | head -1 | awk '{ print $1 }')
+#ES=$(getent hosts elasticsearch | awk '{print $1}')
 
 cd $GOPATH
 mkdir pkg

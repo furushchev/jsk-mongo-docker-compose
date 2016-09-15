@@ -1,7 +1,7 @@
 #!/bin/bash
 
-MONGO1=$(getent hosts mongo1 | awk '{print $1}') 
-ELASTIC=$(getent hosts elasticsearch | awk '{print $1}')
+MONGO1=$(getent hosts mongo1 | head -1 | awk '{print $1}') 
+ELASTIC=$(getent hosts elasticsearch | head -1 | awk '{print $1}')
 
 echo "Waiting for mongo"
 until curl "http://${MONGO1}:28017/isMaster?text=1" 2>&1 | grep ismaster | grep true; do
