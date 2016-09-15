@@ -1,8 +1,15 @@
 nodes:
   mongo:
     type: mongo
-    uri: mongodb://mongo1/jsk_robot_lifelog
+    uri: "mongodb://mongo1:27018/jsk_robot_lifelog"
+    tail: true
     debug: true
+    namespace: "jsk_robot_lifelog.pr1012"
   elastic:
     type: elasticsearch
-    uri: http://elasticsearch:9200/
+    uri: "http://elasticsearch:9200/"
+    namespace: "jsk_robot_lifelog.pr1012"
+  log:
+    type: transformer
+    filename: "/transporter/debug-logging.js"
+    namespace: "jsk_robot_lifelog.pr1012"

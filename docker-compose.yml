@@ -3,8 +3,8 @@ mongo1:
   entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest"]
   hostname: mongo1
   ports:
-    - 27017:27017
-    - 28017:28017
+    - 27018:27018
+    - 28018:28018
   restart: always
   volumes:
     - /etc/localtime:/etc/localtime:ro
@@ -14,8 +14,8 @@ mongo2:
   entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest"]
   hostname: mongo2
   ports:
-    - 27018:27017
-    - 28018:28017
+    - 27019:27018
+    - 28019:28018
   restart: always
   volumes:
     - /etc/localtime:/etc/localtime:ro

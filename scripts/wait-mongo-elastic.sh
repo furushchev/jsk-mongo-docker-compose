@@ -3,8 +3,13 @@
 MONGO1=$(getent hosts mongo1 | head -1 | awk '{print $1}') 
 ELASTIC=$(getent hosts elasticsearch | head -1 | awk '{print $1}')
 
+if [ "$(which curl)" = "" ]; then
+    apt-get update -y -qq
+    apt-get install -y -qq curl
+fi
+
 echo "Waiting for mongo"
-until curl "http://${MONGO1}:28017/isMaster?text=1" 2>&1 | grep ismaster | grep true; do
+until curl "http://${MONGO1}:28018/isMaster?text=1" 2>&1 | grep ismaster | grep true; do
     printf '.'
     sleep 1
 done
