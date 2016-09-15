@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 MONGO1=$(getent hosts mongo1 | head -1 | awk '{print $1}')
 MONGO2=$(getent hosts mongo2 | head -1 | awk '{print $1}')
 ELASTIC=$(getent hosts elasticsearch | head -1 | awk '{print $1}')
@@ -22,4 +24,5 @@ sleep 40
 echo "Test: read from elasticsearch"
 curl -XGET "http://${ELASTIC}:9200/jsk_robot_lifelog/_search?pretty&q=*:*"
 
-echo "Done"
+echo "Done All Tests."
+exit 0
