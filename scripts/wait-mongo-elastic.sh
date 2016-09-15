@@ -9,7 +9,7 @@ if [ "$(which curl)" = "" ]; then
 fi
 
 echo "Waiting for mongo"
-until curl "http://${MONGO1}:28018/isMaster?text=1" 2>&1 | grep ismaster | grep true; do
+until curl "http://${MONGO1}:28017/isMaster?text=1" 2>&1 | grep ismaster | grep true; do
     printf '.'
     sleep 1
 done

@@ -1,21 +1,21 @@
 mongo1:
   image: mongo:3.2
-  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest"]
+  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest", "--port", "27017"]
   hostname: mongo1
   ports:
-    - 27018:27018
-    - 28018:28018
+    - 27017:27017
+    - 28017:28017
   restart: always
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./data/mongo1:/db
 mongo2:
   image: mongo:3.2
-  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest"]
+  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest", "--port", "27017"]
   hostname: mongo2
   ports:
-    - 27019:27018
-    - 28019:28018
+    - 27018:27017
+    - 28018:28017
   restart: always
   volumes:
     - /etc/localtime:/etc/localtime:ro

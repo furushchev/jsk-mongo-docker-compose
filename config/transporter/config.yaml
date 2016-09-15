@@ -1,7 +1,7 @@
 nodes:
   mongo:
     type: mongo
-    uri: "mongodb://mongo1:27018/jsk_robot_lifelog"
+    uri: "mongodb://mongo1/jsk_robot_lifelog"
     tail: true
     debug: true
     namespace: "jsk_robot_lifelog.pr1012"

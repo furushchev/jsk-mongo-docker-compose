@@ -1,0 +1,16 @@
+language: generic
+sudo: required
+services:
+  - docker
+install:
+  - sudo apt-get update -y -qq
+  - sudo apt-get install -y -qq curl
+  - sudo sh -c "curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose"
+  - sudo chmod +x /usr/local/bin/docker-compose
+  - docker-compose --version
+script:
+  - echo $(pwd)
+  - docker-compose up -d
+  - sleep 5
+  - docker wait jskmongodockercompose_test_1
+  - docker logs jskmongodockercompose_test_1 | grep "Done All Tests."
