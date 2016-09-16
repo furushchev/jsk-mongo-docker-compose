@@ -30,6 +30,22 @@ docker ps -a  # find target machine
 docker logs <machine name>
 ```
 
+### Migrate data from another mongodb server
+
+```bash
+# on the same machine as `docker-compose up -d`
+$ mongo
+rs1:PRIMARY> use admin
+switched to db admin
+rs1:PRIMARY> db.runCommand({
+ copydb: 1,
+ fromhost: <source mongo server address>,
+ fromdb: <source mongo database>,
+ todb: <destination mongo database>
+})
+```
+
+
 ## Author
 
 Yuki Furuta <<furushchev@jsk.imi.i.u-tokyo.ac.jp>>
