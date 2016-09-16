@@ -1,6 +1,6 @@
 mongo1:
   image: mongo:3.2
-  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest", "--port", "27017"]
+  entrypoint: ["/scripts/mongo-startup.sh"]
   hostname: mongo1
   ports:
     - 27017:27017
@@ -9,9 +9,10 @@ mongo1:
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./data/mongo1:/db
+    - ./scripts:/scripts
 mongo2:
   image: mongo:3.2
-  entrypoint: ["/usr/bin/mongod", "--replSet", "rs1", "--shardsvr", "--dbpath", "/db", "--journal", "--directoryperdb", "--rest", "--port", "27017"]
+  entrypoint: ["/scripts/mongo-startup.sh"]
   hostname: mongo2
   ports:
     - 27018:27017
@@ -20,6 +21,7 @@ mongo2:
   volumes:
     - /etc/localtime:/etc/localtime:ro
     - ./data/mongo2:/db
+    - ./scripts:/scripts
   links:
     - mongo1:mongo1
 elasticsearch:
@@ -36,7 +38,7 @@ elasticsearch:
   restart: always
 mongosetup:
   image: mongo:3.2
-  entrypoint: ["/scripts/mongosetup.sh"]
+  entrypoint: ["/scripts/mongo-setup.sh"]
   hostname: mongosetup
   volumes:
     - /etc/localtime:/etc/localtime:ro
@@ -55,7 +57,7 @@ transporter: # mongodb -> elasticsearch
     - ./config/transporter:/transporter
     - ./scripts:/scripts
   restart: always
-  entrypoint: [ "/scripts/transportersetup.sh" ]
+  entrypoint: [ "/scripts/transporter-setup.sh" ]
 test:
   image: mongo:3.2
   links:
